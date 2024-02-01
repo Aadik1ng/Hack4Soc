@@ -4,12 +4,12 @@ conn = http.client.HTTPSConnection('api.marketaux.com')
 api_token='fTW5EVeBM0ijnYIVT63uaFm9FVuDeXRMwb5R6Hv2'
 
 
-def switch(risk):
+def switch(risk,limit):
     if risk == "High":
         params = urllib.parse.urlencode({
     'api_token': api_token,
     'countries': 'in',
-    'limit': 3,
+    'limit': limit,
     'sentiment_lte':0.5,
     # 'industries':'Technology'
     })
@@ -23,7 +23,7 @@ def switch(risk):
         params = urllib.parse.urlencode({
     'api_token': api_token,
     'countries': 'in',
-    'limit': 3,
+    'limit': limit,
     'sentiment_lte':0.095
     })
         conn.request('GET', '/v1/news/all?{}'.format(params))
@@ -35,8 +35,8 @@ def switch(risk):
         params = urllib.parse.urlencode({
     'api_token': api_token,
     'countries': 'in',
-    'limit': 3,
-    'sentiment_lte':0
+    'limit': limit,
+    'sentiment_lte':0.001
     
     })
         conn.request('GET', '/v1/news/all?{}'.format(params))
@@ -50,17 +50,12 @@ def switch(risk):
 
 
 risk=str(input("Risk level "))
-data=switch(risk)
+limit=4
+data=switch(risk,3)
 
 data=data.decode('utf-8')
 json_data = json.loads(data)
 formatted_json = json.dumps(json_data, indent=4)
 
-for item in json_data['data']:
-    # Check if 'entities' is in the item
-    if 'entities' in item:
-        # Loop through each entity in 'entities'
-        for entity in item['entities']:
-            # Access the 'symbol' for each entity
-            symbol = entity['symbol']
-            print(symbol)
+print(formatted_json)
+    

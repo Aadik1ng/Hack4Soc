@@ -1,66 +1,91 @@
-import http.client, urllib.parse
-import json
-conn = http.client.HTTPSConnection('api.marketaux.com')
-api_token='fTW5EVeBM0ijnYIVT63uaFm9FVuDeXRMwb5R6Hv2'
+from flask import Flask
+import savings_goal
+import expense_tracker
+import financial_data
+import investment_strategy
+
+app = Flask(__name__)
+#---------financial data-------------
+
+@app.route('/addIncome')
+def addIncocme():
+    return addIncome()
+
+@app.route('/addExpense')
+def addExpense():
+    return addExpense()
+
+@app.route('/updateFinancialData')
+def updateFinancialData():
+    return updateFinancialData()
+
+@app.route('/getFinancialSummary')
+def getFinancialSummary():
+    return generatePlan()
+# ------------invest---------------------------
+@app.route('/generatePlan')
+def generatePlan():
+    return generatePlan()
+
+@app.route('/updatePlan')
+def updatePlan():
+    return updatePlan()
+
+@app.route('/getPlanDetails')
+def getPlanDetails():
+    return getPlanDetails()
 
 
-def switch(risk):
-    if risk == "High":
-        params = urllib.parse.urlencode({
-    'api_token': api_token,
-    'countries': 'in',
-    'limit': 3,
-    'sentiment_lte':0.5,
-    # 'industries':'Technology'
-    })
-        conn.request('GET', '/v1/news/all?{}'.format(params))
-        res = conn.getresponse()
-        data = res.read()
-        return data
-    
-    
-    elif risk == "Medium":
-        params = urllib.parse.urlencode({
-    'api_token': api_token,
-    'countries': 'in',
-    'limit': 3,
-    'sentiment_lte':0.095
-    })
-        conn.request('GET', '/v1/news/all?{}'.format(params))
-        res = conn.getresponse()
-        data = res.read()
-        return data
+# ------expense----------
+@app.route('/getExpenseReport')
+def getExpenseReport():
+    return getExpenseReport()
 
-    elif risk == "Low":
-        params = urllib.parse.urlencode({
-    'api_token': api_token,
-    'countries': 'in',
-    'limit': 3,
-    'sentiment_lte':0
-    
-    })
-        conn.request('GET', '/v1/news/all?{}'.format(params))
-        res = conn.getresponse()
-        data = res.read()
-        return data
+@app.route('/addSubcategory')
+def addSubcategory():
+    return addSubcategory()
 
 
+# --------goal-----------
+@app.route('/setGoal')
+def setGoal():
+    return setGoal()
+
+@app.route('/modifyGoal')
+def modifyGoal():
+    return modifyGoal()
+
+@app.route('/getGoalStatus')
+def getGoalStatus():
+    return addSubcagetGoalStatusegory()
+
+# -------register-----------
+@app.route('/registerUser')
+def registerUser():
+    return registerUser()
+
+@app.route('/login')
+def login():
+    return login()
+
+@app.route('/updateProfile')
+def updateProfile():
+    return updateProfile()
+
+@app.route('/deleteUser')
+def deleteUser():
+    return deleteUser()
 
 
 
 
-risk=str(input("Risk level "))
-data=switch(risk)
 
-data=data.decode('utf-8')
-json_data = json.loads(data)
-formatted_json = json.dumps(json_data, indent=4)
 
-for item in json_data['data']:
-    # Check if 'entities' is in the item
-    if 'entities' in item:
-        # Loop through each entity in 'entities'
-        for entity in item['entities']:
-            # Access the 'symbol' for each entity
-            symbol = entity['symbol']
-            print(symbol)
+
+
+
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
