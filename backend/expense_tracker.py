@@ -10,13 +10,7 @@ class ExpenseTracker:
         if main_category in self.expenses and subcategory not in self.expenses[main_category]:
             self.expenses[main_category][subcategory] = []
 
-    # def trackExpenses(self, main_category, subcategory, amount):
-    #     """Monitor and record expenses."""
-    #     if main_category not in self.expenses:
-    #         self.expenses[main_category] = {}
-    #     if subcategory not in self.expenses[main_category]:
-    #         self.addSubcategory(main_category, subcategory)
-    #     self.expenses[main_category][subcategory].append(amount)
+
 
     def getExpenseReport(self):
         """Generate reports on user spending."""
