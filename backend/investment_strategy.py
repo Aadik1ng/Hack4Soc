@@ -29,6 +29,25 @@ class InvestmentStrategy:
         self.connection.commit()
 
 # //intial saving feature
+    def basic_feature(income, avg_expenses, goal, time):
+    # """Basic feature calculation.
+    # Args:
+    #     income (float): Monthly income.
+    #     avg_expenses (float): Average monthly expenses.
+    #     goal (float): Desired savings goal.
+    #     time (float): Desired time to reach goal.
+    # Returns:
+    #     float: Basic feature calculation.
+    # """
+
+        if (goal / time > income - avg_expenses):
+            print("You are not saving enough to reach your goal in the given time.")
+            can_save = int(input("How much can you save per month? "))
+            return can_save
+
+        else:
+            print(f"You need to save {goal / time} per month to reach your goal in the given time.")
+
 
     def generatePlan(self, risk_level, target_return, allocation_fixed_income,time_frame):
         #50 EQity,30 20,
