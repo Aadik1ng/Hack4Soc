@@ -24,7 +24,9 @@ def basic_feature(income, avg_expenses, goal, time):
     total_repayment = loan_amount + interest_amount
     total_profit = to_save + interest_amount
 
-    if (ideal_savings > actual_savings):
+    fixed_return_as = (actual_savings * 20) / 100
+
+    if (ideal_savings > actual_savings and to_save_percent > 20):
         print(f"""You need to save {round(ideal_savings, 2)} per month to reach your goal in the given time.\n
               That is {round(to_save, 2)} or {round(to_save_percent)}% more than you are currently saving.\n
               You can borrow {round(loan_amount, 2)} at {min_interest}% interest (per month) to reach your goal in the given time.""")
@@ -44,15 +46,23 @@ def basic_feature(income, avg_expenses, goal, time):
               • Amazon.com Inc. (AMZN)\n
               • Alphabet Inc. (GOOGL)\n""")
 
+    elif(ideal_savings > actual_savings and to_save_percent <= 20 ):
+        print(f"""You need to save {round(ideal_savings, 2)} per month to reach your goal in the given time.\n
+            That is {round(to_save, 2)} or {round(to_save_percent)}% more than you are currently saving.\n
+            Stocks which gives you a profit of {round(to_make_percent, 2)}% of {round(actual_savings, 2)} which makes the total savings per month to be {actual_savings + ((actual_savings * 20) / 100)} are:\n
+            • Apple Inc. (AAPL)\n
+            • Microsoft Corporation (MSFT)\n
+            • Amazon.com Inc. (AMZN)\n
+            • Alphabet Inc. (GOOGL)\n""") 
     else:
-        return round(ideal_savings, 2)
+        print(f"{round(ideal_savings, 2)}")
 
         
 
 
 
-# income = int(input("What is your monthly income? "))
-# avg_expenses = int(input("What is your average monthly expenses? "))
-# goal = int(input("What is your desired savings goal? "))
-# time = int(input("In how many months do you want to reach your goal? "))
-can_save = basic_feature(500, 300, 4000, 3)
+income = int(input("What is your monthly income? "))
+avg_expenses = int(input("What is your average monthly expenses? "))
+goal = int(input("What is your desired savings goal? "))
+time = int(input("In how many months do you want to reach your goal? "))
+can_save = basic_feature(income, avg_expenses, goal, time)
