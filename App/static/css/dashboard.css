@@ -71,6 +71,7 @@ body {
 .sidebar-brand img {
   /* margin-left: 0.5em;
   margin-right: 2em; */
+  border-radius: 5px;
   width: 210px;
   align-items: center;
 }

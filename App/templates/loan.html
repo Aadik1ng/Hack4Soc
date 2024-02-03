@@ -4,11 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loan Options</title>
-    <link rel="stylesheet" href="loan.css">
+    <link rel="stylesheet" href="/App/static/css/loan.css">
+    <style>
+        .risk-slider-container {
+            margin-top: 20px;
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #riskSlider {
+            width: 40%;
+        }
+
+        #riskValue {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="loan-container">
         <h1>Available Loan Options</h1>
+        
+
+        <!-- Risk Slider -->
+        <div class="risk-slider-container">
+            <h3 style="color: blue;">Choose level of Risk:</h3>
+            <input type="range" min="0" max="100" value="0" class="slider" id="riskSlider">
+            <p id="riskValue">Risk Factor: Low</p>
+        </div>
+
         <!-- List of loans -->
         <div class="loan-list">
             <!-- Repeat this block for each loan -->
@@ -21,6 +46,24 @@
             </div>
             <!-- ... more loan-item blocks for each loan ... -->
         </div>
+
+        <script>
+            // Update risk factor on slider change
+            const riskSlider = document.getElementById('riskSlider');
+            const riskValue = document.getElementById('riskValue');
+
+            riskSlider.addEventListener('input', function () {
+                const value = this.value;
+
+                if (value < 33) {
+                    riskValue.textContent = 'Risk Factor: Low';
+                } else if (value < 67) {
+                    riskValue.textContent = 'Risk Factor: Medium';
+                } else {
+                    riskValue.textContent = 'Risk Factor: High';
+                }
+            });
+        </script>
     </div>
 </body>
 </html>

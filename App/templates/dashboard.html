@@ -46,11 +46,6 @@
         <ul class="sidebar-list">
           <li class="sidebar-list-item">
             <a href="#" target="_blank">
-              <span class="material-icons-outlined">dashboard</span> Dashboard
-            </a>
-          </li>
-          <li class="sidebar-list-item">
-            <a href="#" target="_blank">
               <span class="material-icons-outlined">inventory_2</span> ALETRS
             </a>
           </li>
@@ -85,11 +80,7 @@
 
       <!-- Main -->
       <main class="main-container">
-        <div class="main-title">
-          <h2>DASHBOARD</h2>
-        </div>
-
-        <div class="main-cards">
+              <div class="main-cards">
 
           <div class="card">
 
@@ -107,6 +98,13 @@
       </div>
       <input type="number" placeholder="Enter your average monthly expense" id="expense" class="custom-input">
     </div>
+    <div class="card">
+      <div class="card-inner">
+  <h2>DREAM PRODUCT</h2>
+  <span class="material-icons-outlined">shopping_cart</span>
+</div>
+<input type="text" placeholder="Enter details" id="product" class="custom-input">
+</div>
   
     <div class="card">
       <div class="card-inner">
@@ -116,14 +114,6 @@
       <input type="number" placeholder="Enter details" id="goalamnt">
       <label for="start">Enter the Date:</label>
       <input type="date" name="begin" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31">
-    </div>
-
-        <div class="card">
-            <div class="card-inner">
-        <h2>DREAM PRODUCT</h2>
-        <span class="material-icons-outlined">shopping_cart</span>
-      </div>
-      <input type="text" placeholder="Enter details" id="product" class="custom-input">
     </div>
 </div>
     
@@ -142,24 +132,37 @@
                                               border-radius: 5px;
                                               cursor: pointer;">
       Submit All Data
-    </button>
+    </button><br>
   </div>
-      <script>
-      function submitData() {
-        // Add your logic here to handle the submission of all data
-        var incomeValue = document.getElementById("income").value;
-        var expenseValue = document.getElementById("expense").value;
-        var goalAmountValue = document.getElementById("goalamnt").value;
-        var dateValue = document.getElementsByName("begin")[0].value;
-        var productValue = document.getElementById("product").value;
-  
-        // You can replace the alerts with your actual logic, such as sending data to a server.
-        alert("Income submitted: Rs." + incomeValue);
-        alert("Expense submitted: Rs." + expenseValue);
-        alert("Goal amount submitted: " + goalAmountValue);
-        alert("Date submitted: " + dateValue);
-        alert("Product details submitted: " + productValue);
-      }
+  <div class="charts-card">
+    <h3 style=" color: #fff;">Your current savings:</h3>
+    <div id="currentSavingsDisplay">-</div>
+    <h3 style=" color: #fff;">Savings required to reach goal:</h3>
+    <div id="savingsRequiredDisplay">-</div>
+    <h3 style="color: #fff;">Investment Plans:</h3>
+    <!-- ... -->
+  </div>
+  <script>
+    function submitData() {
+      var income = parseFloat(document.getElementById("income").value) || 0;
+      var expenses = parseFloat(document.getElementById("expense").value) || 0;
+      var goalAmount = parseFloat(document.getElementById("goalamnt").value) || 0;
+      var goalDate = new Date(document.getElementsByName("begin")[0].value);
+
+      var currentSavings = income - expenses;
+      
+      var currentDate = new Date();
+      var timeDiff = goalDate.getTime() - currentDate.getTime();
+      var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      var monthsDiff = Math.ceil(daysDiff / 30); // Approximate the number of months
+
+      var savingsRequired = monthsDiff > 0 ? goalAmount / monthsDiff : 0;
+
+      document.getElementById('currentSavingsDisplay').textContent = 'Your current savings: ' + currentSavings.toFixed(2);
+      document.getElementById('savingsRequiredDisplay').textContent = 'Savings required to reach goal: ' + savingsRequired.toFixed(2);
+
+      return false; // To prevent form submission and page refresh
+    }
     </script>
   
   
@@ -170,9 +173,9 @@
         <div class="charts">
             <div class="charts-card">
                 
-              <h3 styl=" color: #fff;"> Your current savings :</h3>
-              <h3 style=" color: #fff;"> Savings required to reach goal :</h3>
-              <h3 style="color: #fff;"> Investment Plans:</h3>
+              <h3 style=" color: #fff;">Your current savings :</h3>
+              <h3 style=" color: #fff;">Savings required to reach goal :</h3>
+              <h3 style="color: #fff;">Investment Plans :</h3>
             </div>
             <div class="charts-card">
                 <h2 class="chart-title">SAVINGS vs EXPENSES</h2>
@@ -181,7 +184,7 @@
     
             </div>
             <div class="charts-card">
-                <h2 class="chart-title">Top 5 Products</h2>
+                <h2 class="chart-title">Expense Tracker</h2>
                 <div id="bar-chart"></div>
               </div>
           
@@ -195,7 +198,288 @@
     <!-- ApexCharts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
     <!-- Custom JS -->
-    <script src="Dashbrd_script.js"></script>
+    <script>// SIDEBAR TOGGLE
+
+      let sidebarOpen = false;
+      const sidebar = document.getElementById('sidebar');
+      
+      function openSidebar() {
+        if (!sidebarOpen) {
+          sidebar.classList.add('sidebar-responsive');
+          sidebarOpen = true;
+        }
+      }
+      
+      function closeSidebar() {
+        if (sidebarOpen) {
+          sidebar.classList.remove('sidebar-responsive');
+          sidebarOpen = false;
+        }
+      }
+      
+      // ---------- CHARTS ----------
+      
+      // BAR CHART
+      const barChartOptions = {
+        series: [
+          {
+            data: [10, 8, 6, 4, 2],
+            name: 'Products',
+          },
+        ],
+        chart: {
+          type: 'bar',
+          background: 'transparent',
+          height: 350,
+          toolbar: {
+            show: false,
+          },
+        },
+        colors: ['#2962ff', '#d50000', '#2e7d32', '#ff6d00', '#583cb3'],
+        plotOptions: {
+          bar: {
+            distributed: true,
+            borderRadius: 4,
+            horizontal: false,
+            columnWidth: '40%',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        fill: {
+          opacity: 1,
+        },
+        grid: {
+          borderColor: '#55596e',
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+          xaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        legend: {
+          labels: {
+            colors: '#f5f7ff',
+          },
+          show: true,
+          position: 'top',
+        },
+        stroke: {
+          colors: ['transparent'],
+          show: true,
+          width: 2,
+        },
+        tooltip: {
+          shared: true,
+          intersect: false,
+          theme: 'dark',
+        },
+        xaxis: {
+          categories: ['Rent', 'Food', 'Transportation', 'Groceries', 'Laundry'],
+          title: {
+            style: {
+              color: '#f5f7ff',
+            },
+          },
+          axisBorder: {
+            show: true,
+            color: '#55596e',
+          },
+          axisTicks: {
+            show: true,
+            color: '#55596e',
+          },
+          labels: {
+            style: {
+              colors: '#f5f7ff',
+            },
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Count',
+            style: {
+              color: '#f5f7ff',
+            },
+          },
+          axisBorder: {
+            color: '#55596e',
+            show: true,
+          },
+          axisTicks: {
+            color: '#55596e',
+            show: true,
+          },
+          labels: {
+            style: {
+              colors: '#f5f7ff',
+            },
+          },
+        },
+      };
+      
+      const barChart = new ApexCharts(
+        document.querySelector('#bar-chart'),
+        barChartOptions
+      );
+      barChart.render();
+      
+      // AREA CHART
+      const areaChartOptions = {
+        series: [
+          {
+            name: 'Savings',
+            data: [31, 40, 28, 51, 42, 109, 100],
+          },
+          {
+            name: 'Expenses',
+            data: [11, 32, 45, 32, 34, 52, 41],
+          },
+        ],
+        chart: {
+          type: 'area',
+          background: 'transparent',
+          height: 350,
+          stacked: false,
+          toolbar: {
+            show: false,
+          },
+        },
+        colors: ['#00ab57', '#d50000'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        dataLabels: {
+          enabled: false,
+        },
+        fill: {
+          gradient: {
+            opacityFrom: 0.4,
+            opacityTo: 0.1,
+            shadeIntensity: 1,
+            stops: [0, 100],
+            type: 'vertical',
+          },
+          type: 'gradient',
+        },
+        grid: {
+          borderColor: '#55596e',
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+          xaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        legend: {
+          labels: {
+            colors: '#f5f7ff',
+          },
+          show: true,
+          position: 'top',
+        },
+        markers: {
+          size: 6,
+          strokeColors: '#1b2635',
+          strokeWidth: 3,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        xaxis: {
+          axisBorder: {
+            color: '#55596e',
+            show: true,
+          },
+          axisTicks: {
+            color: '#55596e',
+            show: true,
+          },
+          labels: {
+            offsetY: 5,
+            style: {
+              colors: '#f5f7ff',
+            },
+          },
+        },
+        yaxis: [
+          {
+            title: {
+              text: 'Purchase Orders',
+              style: {
+                color: '#f5f7ff',
+              },
+            },
+            labels: {
+              style: {
+                colors: ['#f5f7ff'],
+              },
+            },
+          },
+          {
+            opposite: true,
+            title: {
+              text: 'Sales Orders',
+              style: {
+                color: '#f5f7ff',
+              },
+            },
+            labels: {
+              style: {
+                colors: ['#f5f7ff'],
+              },
+            },
+          },
+        ],
+        tooltip: {
+          shared: true,
+          intersect: false,
+          theme: 'dark',
+        },
+      };
+      
+      const areaChart = new ApexCharts(
+        document.querySelector('#area-chart'),
+        areaChartOptions
+      );
+      areaChart.render();
+
+      function submitData() {
+  // Retrieve user input values
+  var income = parseFloat(document.getElementById("income").value);
+  var expenses = parseFloat(document.getElementById("expense").value);
+  var goalAmount = parseFloat(document.getElementById("goalamnt").value);
+  var goalDate = new Date(document.getElementsByName("begin")[0].value);
+  
+  // Calculate current savings
+  var currentSavings = income - expenses;
+  
+  // Calculate the difference in months between now and the goal date
+  var currentDate = new Date();
+  var timeDiff = goalDate.getTime() - currentDate.getTime();
+  var daysDiff = timeDiff / (1000 * 3600 * 24);
+  var monthsDiff = daysDiff / 30; // Approximate the number of months
+
+  // Calculate savings required per month to reach goal
+  var savingsRequired = goalAmount / monthsDiff;
+
+  // Display the results
+  document.getElementById('currentSavingsDisplay').textContent = 'Your current savings: ' + currentSavings.toFixed(2);
+  document.getElementById('savingsRequiredDisplay').textContent = 'Savings required to reach goal: ' + savingsRequired.toFixed(2);
+
+  // Prevent page refresh
+  return false;
+}
+
+      </script>
   </body>
 </html>
 <style>
