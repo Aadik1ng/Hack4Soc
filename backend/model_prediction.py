@@ -73,13 +73,13 @@ import matplotlib.pyplot as plt
 
 # Step 1: Isolate the last 7 days of data with the necessary features
 # Make sure to not include the 'Close' column as it is what we're trying to predict
-last_7_days_features = data[['MA50', 'RSI', 'MACD', 'Upper Band', 'Lower Band']][-7:]
+last_7_days_features = data[['MA50', 'RSI', 'MACD', 'Upper Band', 'Lower Band']][-30:]
 
 # Step 2: Use the model to predict the closing prices for these days
 predicted_prices_last_7_days = model.predict(last_7_days_features)
 
 # Step 3: Compare the predicted prices with the actual closing prices
-actual_prices_last_7_days = data['Close'][-7:]
+actual_prices_last_7_days = data['Close'][-30:]
 
 # Print out the comparison
 for actual, predicted in zip(actual_prices_last_7_days, predicted_prices_last_7_days):
@@ -97,6 +97,6 @@ plt.plot(actual_prices_last_7_days.index, actual_prices_last_7_days, label='Actu
 plt.plot(actual_prices_last_7_days.index, predicted_prices_last_7_days, label='Predicted Price', linestyle='--')
 plt.xlabel('Date')
 plt.ylabel('Price')
-plt.title('Actual vs Predicted Price for the Last 7 Days')
+plt.title('Actual vs Predicted Price for the Last 30 Days')
 plt.legend()
 plt.show()
