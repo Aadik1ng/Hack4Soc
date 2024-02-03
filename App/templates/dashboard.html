@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+  </head>
+  <body>
+    <div class="grid-container">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+                <div class="header-left">  
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <div class="sidebar-brand img">
+            <img src="/static/images/logocc.png" alt="logo">
+            </div>
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+        
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">dashboard</span> Dashboard
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">inventory_2</span> ALETRS
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">category</span> SAVINGS PRO
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">groups</span> INVESTMENTS PRO
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">fact_check</span> DETAILED REPORT
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">poll</span> 1-1 EXPERT CALL
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">settings</span> LOG OUT
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container">
+        <div class="main-title">
+          <h2>DASHBOARD</h2>
+        </div>
+
+        <div class="main-cards">
+
+          <div class="card">
+
+      <div class="card-inner">
+        <h2>INCOME</h2>
+        <span class="material-icons-outlined">inventory_2</span>
+      </div>
+      <input type="number" placeholder="Enter your income" id="income" class="custom-input">
+    </div>
+  
+    <div class="card">
+      <div class="card-inner">
+        <h2>EXPENSES</h2>
+        <span class="material-icons-outlined">category</span>
+      </div>
+      <input type="number" placeholder="Enter your average monthly expense" id="expense" class="custom-input">
+    </div>
+  
+    <div class="card">
+      <div class="card-inner">
+        <h2>GOAL AMOUNT</h2>
+        <span class="material-icons-outlined">groups</span>
+      </div>
+      <input type="number" placeholder="Enter details" id="goalamnt">
+      <label for="start">Enter the Date:</label>
+      <input type="date" name="begin" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31">
+    </div>
+
+        <div class="card">
+            <div class="card-inner">
+        <h2>DREAM PRODUCT</h2>
+        <span class="material-icons-outlined">shopping_cart</span>
+      </div>
+      <input type="text" placeholder="Enter details" id="product" class="custom-input">
+    </div>
+</div>
+    
+  
+    <!-- ... (your existing HTML code) ... -->
+
+<!-- Common Submission Button -->
+<div class="submit-button-container" style="text-align: center; margin-top: 20px;">
+    <button onclick="submitData()" style="background-color: #badeeb;
+                                              color: rgb(13, 0, 0);
+                                              padding: 10px 20px;
+                                              text-align: center;
+                                              text-decoration: none;
+                                              display: inline-block;
+                                              font-size: 16px;
+                                              border-radius: 5px;
+                                              cursor: pointer;">
+      Submit All Data
+    </button>
+  </div>
+      <script>
+      function submitData() {
+        // Add your logic here to handle the submission of all data
+        var incomeValue = document.getElementById("income").value;
+        var expenseValue = document.getElementById("expense").value;
+        var goalAmountValue = document.getElementById("goalamnt").value;
+        var dateValue = document.getElementsByName("begin")[0].value;
+        var productValue = document.getElementById("product").value;
+  
+        // You can replace the alerts with your actual logic, such as sending data to a server.
+        alert("Income submitted: Rs." + incomeValue);
+        alert("Expense submitted: Rs." + expenseValue);
+        alert("Goal amount submitted: " + goalAmountValue);
+        alert("Date submitted: " + dateValue);
+        alert("Product details submitted: " + productValue);
+      }
+    </script>
+  
+  
+  
+  <!-- ... (rest of your HTML code) ... -->
+  
+
+        <div class="charts">
+            <div class="charts-card">
+                
+              <h3 styl=" color: #fff;"> Your current savings :</h3>
+              <h3 style=" color: #fff;"> Savings required to reach goal :</h3>
+              <h3 style="color: #fff;"> Investment Plans:</h3>
+            </div>
+            <div class="charts-card">
+                <h2 class="chart-title">SAVINGS vs EXPENSES</h2>
+                <div id="area-chart"></div>
+              </div>
+    
+            </div>
+            <div class="charts-card">
+                <h2 class="chart-title">Top 5 Products</h2>
+                <div id="bar-chart"></div>
+              </div>
+          
+           
+      </main>
+      <!-- End Main -->
+
+    </div>
+
+    <!-- Scripts -->
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="Dashbrd_script.js"></script>
+  </body>
+</html>
+<style>
