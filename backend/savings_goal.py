@@ -10,10 +10,6 @@ class SavingsGoal:
         self.current_savings = 0  # Reset current savings when a new goal is set
         self.time=time
 
-    def trackProgress(self, savings):
-        """Monitor savings progress."""
-        self.current_savings = savings
-
     def modifyGoal(self, new_goal):
         """Change existing savings targets."""
         self.goal = new_goal
