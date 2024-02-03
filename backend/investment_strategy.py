@@ -1,5 +1,7 @@
 import psycopg2
 from psycopg2 import sql
+import fetchloans
+
 
 class InvestmentStrategy:
     def __init__(self, username):
@@ -60,6 +62,9 @@ class InvestmentStrategy:
         self.cursor.execute(insert_query)
         self.connection.commit()
         print(f"Investment plan '{plan_name}' created for {self.username}.")
+
+    
+            
 
     def updatePlan(self, plan_id, target_return, allocation_equity, allocation_fixed_income):
         # Modify existing investment plans in the database
