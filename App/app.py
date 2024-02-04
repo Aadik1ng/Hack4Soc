@@ -23,6 +23,14 @@ def login():
 def documentation():
     return render_template('documentation.html')
 
+@app.route('/stocks')
+def stocks():
+    return render_template('stocks.html')
+
+@app.route('/loan')
+def loan():
+    return render_template('loan.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 
