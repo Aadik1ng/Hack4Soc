@@ -187,7 +187,7 @@
           var actualSavings = income - avgExpenses;
           var toSave = idealSavings - actualSavings;
           var toSavePercent = (toSave * 100) / actualSavings;
-          var toMakePercent = 20; // Fixed value
+          var toMakePercent = 5; // Fixed value
           var loanAmount = ((toSave * 100) / toMakePercent) - actualSavings;
           var minInterest = 5;
           var makePercent = minInterest + toMakePercent;
@@ -212,12 +212,12 @@
             document.getElementById('savingsRequiredDisplay').textContent = 'Savings required per month to reach goal: ' + idealSavings.toFixed(2);
             return false;
           }
-          else if (idealSavings > actualSavings && toSavePercent <= 20) {
+          else if (idealSavings > actualSavings && toSavePercent <= 10) {
             alert("You need to save " + idealSavings.toFixed(2) + " per month to reach your goal in " + time + " months.\nThat is " + toSave.toFixed(2) + " or " + toSavePercent.toFixed(2) + "% more than you are currently saving.\nYou can invest " + actualSavings.toFixed(2) + " in the following stocks for a month to make" + idealSavings.toFixed(2));
             window.location.href = '/stocks';
           }
-          else if (idealSavings > actualSavings && toSavePercent > 20) {
-            alert("You need to save " + idealSavings.toFixed(2) + " per month to reach your goal in " + time + " months.\nThat is " + toSave.toFixed(2) + " or " + toSavePercent.toFixed(2) + "% more than you are currently saving.\nYou can borrow " + loanAmount.toFixed(2) + " at " + minInterest + "% interest per month to reach your goal.\nTotal Investment: " + totalInvestment.toFixed(2) + "\nTotal Repayment: " + totalRepayment.toFixed(2) + "\nTotal Profit: " + totalProfit.toFixed(2) + "\nYou can invest " + actualSavings.toFixed(2) + " in the following stocks for a month to make" + idealSavings.toFixed(2));
+          else if (idealSavings > actualSavings && toSavePercent > 10) {
+            alert("You need to save " + idealSavings.toFixed(2) + " per month to reach your goal in " + time + " months.\nThat is " + toSave.toFixed(2) + " or " + toSavePercent.toFixed(2) + "% more than you are currently saving.\nYou can borrow " + loanAmount.toFixed(2) + " at " + minInterest + "% interest per month to reach your goal.\nTotal Investment: " + totalInvestment.toFixed(2) + "\nTotal Repayment: " + totalRepayment.toFixed(2) + "\nTotal Profit: " + totalProfit.toFixed(2) + "\nYou can invest " + totalInvestment.toFixed(2) + " in the following stocks for a month to make" + idealSavings.toFixed(2));
             window.location.href = '/loan';
             // window.location.href = '/stocks';
           }
