@@ -31,12 +31,13 @@ data['RSI'] = rsi
 
 # Example: Calculate the MACD
 exp1 = data['Close'].ewm(span=12, adjust=False).mean()
+exp1 = exp1.dropna()
 exp2 = data['Close'].ewm(span=26, adjust=False).mean()
+exp2 = exp2.dropna()
 macd = exp1-exp2
 exp3 = macd.ewm(span=9, adjust=False).mean()
 data['MACD'] = macd
 data['Signal Line'] = exp3
-data = data.dropna()
 
 # Example: Calculate the Bollinger Bands
 data['20 Day MA'] = data['Close'].rolling(window=20).mean()
@@ -64,7 +65,6 @@ actual_prices_last_7_days = data['Close'][-30:]
 # Print out the comparison
 for actual, predicted in zip(actual_prices_last_7_days, predicted_prices_last_7_days):
     print(f"Actual: {actual}, Predicted: {predicted}")
-
 
 mse = mean_squared_error(actual_prices_last_7_days, predicted_prices_last_7_days)
 print(f"Mean Squared Error for the last 7 days: {mse}")
